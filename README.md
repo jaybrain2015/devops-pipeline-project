@@ -9,7 +9,7 @@ Real-world DevOps pipeline .
 - GitHub Actions CI/CD
 - Prometheus & Grafana
 
-## Day 1 — Linux & Bash Scripting
+## Linux & Bash Scripting
 - variables.sh — variable handling
 - conditions.sh — if/else logic
 - loops.sh — automation loops
