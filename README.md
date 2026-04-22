@@ -1,6 +1,6 @@
 # DevOps Pipeline Project
 
-Real-world DevOps pipeline — built during 7-day intensive course.
+Real-world DevOps pipeline .
 
 ## Stack
 - Linux/Bash scripting
