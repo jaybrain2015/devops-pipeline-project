@@ -1,0 +1,31 @@
+[2026-04-22 21:17:47] Health check started by john
+[2026-04-22 21:17:47] --- Disk Space ---
+[2026-04-22 21:17:47] PASS: Disk space OK — 12% free (88% used)
+[2026-04-22 21:17:47] --- Memory ---
+[2026-04-22 21:17:47] PASS: Memory OK — 19661MB free of 31839MB total
+[2026-04-22 21:17:47] --- CPU ---
+[2026-04-22 21:17:47] PASS: CPU load: 1.18 (12 cores available)
+[2026-04-22 21:17:47] --- Services ---
+[2026-04-22 21:17:47] PASS: nginx is running
+[2026-04-22 21:17:47] PASS: mysql is running
+[2026-04-22 21:17:47] PASS: docker is running
+[2026-04-22 21:17:47] --- Ports ---
+[2026-04-22 21:17:47] PASS: Port 80 (Nginx) is active
+[2026-04-22 21:17:47] PASS: Port 5432 (Postgres) is active
+[2026-04-22 21:17:47] PASS: Port 3306 (MySQL) is active
+[2026-04-22 21:17:47] PASS: Port 8080 (Jenkins) is active
+[2026-04-22 21:17:47] --- Docker ---
+[2026-04-22 21:17:48] PASS: Docker running — 9 container(s) active
+[2026-04-22 21:17:48] --- Connectivity ---
+[2026-04-22 21:17:48] PASS: Internet connectivity OK
+[2026-04-22 21:17:53] WARN: DockerHub not reachable
+[2026-04-22 21:17:53] --- Project Structure ---
+[2026-04-22 21:17:53] PASS: Directory exists: ~/devops-project/scripts
+[2026-04-22 21:17:53] PASS: Directory exists: ~/devops-project/config
+[2026-04-22 21:17:53] PASS: Directory exists: ~/devops-project/logs
+[2026-04-22 21:17:53] PASS: Directory exists: ~/devops-project/app
+[2026-04-22 21:17:53] --- Git ---
+[2026-04-22 21:17:53] PASS: Git 2.43.0 installed
+[2026-04-22 21:17:53] WARN: devops-project not a git repo yet
+[2026-04-22 21:17:53] Health check complete — PASS:17 WARN:2 FAIL:0
+[2026-04-22 21:17:53] Result: READY
