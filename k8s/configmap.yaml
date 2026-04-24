@@ -1,0 +1,16 @@
+# ConfigMap stores non-sensitive configuration
+# Keeps config separate from your application code
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: devops-app-config
+  namespace: devops-app
+  labels:
+    app: devops-app
+data:
+  # Key: Value pairs
+  APP_NAME: "John's DevOps App"
+  APP_ENV: "production"
+  APP_VERSION: "1.0.0"
+  DB_HOST: "mysql-service"
+  DB_NAME: "devops_db"

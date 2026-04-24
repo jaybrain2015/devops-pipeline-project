@@ -1,0 +1,103 @@
+# ── PHP App Deployment ───────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-app
+  namespace: devops-app
+  labels:
+    app: devops-app
+spec:
+  replicas: 3              # Run 3 copies for load balancing
+  selector:
+    matchLabels:
+      app: devops-app
+  strategy:
+    type: RollingUpdate    # Zero downtime updates
+    rollingUpdate:
+      maxSurge: 1          # Add 1 extra pod during update
+      maxUnavailable: 0    # Never have less than desired replicas
+  template:
+    metadata:
+      labels:
+        app: devops-app
+    spec:
+      containers:
+        - name: devops-app
+          image: jaybrain/devops-php-app:1.0.0
+          ports:
+            - containerPort: 80
+          env:
+            # From ConfigMap
+            - name: APP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: devops-app-config
+                  key: APP_NAME
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: devops-app-config
+                  key: APP_ENV
+            - name: APP_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: devops-app-config
+                  key: APP_VERSION
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: devops-app-config
+                  key: DB_HOST
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: devops-app-config
+                  key: DB_NAME
+            # From Secret
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: devops-app-secret
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: devops-app-secret
+                  key: DB_PASS
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+          livenessProbe:
+            httpGet:
+              path: /health.php
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /health.php
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+---
+# ── App Service ──────────────────────────────
+apiVersion: v1
+kind: Service
+metadata:
+  name: devops-app-service
+  namespace: devops-app
+  labels:
+    app: devops-app
+spec:
+  selector:
+    app: devops-app
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30080      # Access from outside cluster
+  type: NodePort           # Exposes on cluster node IP

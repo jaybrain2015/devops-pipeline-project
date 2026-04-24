@@ -23,7 +23,7 @@ INSERT INTO users (name, email) VALUES
 
 
 INSERT INTO deployments(version, environment, deployed_by, status)  VALUES 
-        ('1.0.0', 'development', 'john jonah', 'sucess'),
+        ('1.0.0', 'development', 'john jonah', 'success'),
         ('1.0.0', 'staging', 'John Jonah', 'success');
 
 SELECT 'Database initialized successfully' AS message;       
