@@ -1,0 +1,86 @@
+name: Hello CI
+
+on:
+  push:
+    branches: ["*"]    
+  workflow_dispatch:   
+
+jobs:
+  hello:
+    name: Hello World Job
+    runs-on: ubuntu-latest  # Fresh Ubuntu server every run
+
+    steps:
+      # Step 1: Download your code onto the runner
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Show system info
+      - name: Show runner info
+        run: |
+          echo "=== Runner Information ==="
+          echo "OS: $(uname -a)"
+          echo "User: $(whoami)"
+          echo "Directory: $(pwd)"
+          echo "Date: $(date)"
+
+      # Step 3: Show your repo files
+      - name: Show repo structure
+        run: |
+          echo "=== Repository Structure ==="
+          ls -la
+          echo ""
+          echo "=== Git Info ==="
+          git log --oneline -5
+          git branch
+
+      # Step 4: Use environment variables
+      - name: Show environment
+        env:
+          MY_NAME: "John Jonah"
+          APP_VERSION: "1.0.0"
+        run: |
+          echo "Developer: $MY_NAME"
+          echo "Version: $APP_VERSION"
+          echo "GitHub Actor: ${{ github.actor }}"
+          echo "GitHub Repo: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit SHA: ${{ github.sha }}"
+          echo "Event: ${{ github.event_name }}"
+
+      # Step 5: Simple test simulation
+      - name: Run checks
+        run: |
+          echo "Running pre-deployment checks..."
+          
+          # Check PHP files exist
+          if find . -name "*.php" | grep -q .; then
+            echo "✅ PHP files found"
+          else
+            echo "❌ No PHP files found"
+            exit 1
+          fi
+
+          # Check Dockerfile exists
+          if [ -f "app/Dockerfile" ]; then
+            echo "✅ Dockerfile found"
+          else
+            echo "❌ Dockerfile missing"
+            exit 1
+          fi
+
+          # Check docker-compose exists
+          if [ -f "app/docker-compose.yml" ]; then
+            echo "✅ docker-compose.yml found"
+          else
+            echo "❌ docker-compose.yml missing"
+            exit 1
+          fi
+
+          echo "✅ All checks passed!"
+
+      - name: Success
+        run: |
+          echo "🚀 Pipeline completed successfully!"
+          echo "Commit: ${{ github.sha }}"
+          echo "By: ${{ github.actor }}"
